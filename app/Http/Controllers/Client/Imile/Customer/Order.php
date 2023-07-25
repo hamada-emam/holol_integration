@@ -25,9 +25,10 @@ class Order extends Controller
     {
         $body =
             [
-                "customerId" => "C21018520", # TODO get it from global place 
+                // "customerId" => "C21018520", # TODO get it from global place 
+                "customerId" => "C2103720301", # TODO get it from global place 
                 "accessToken" => $token,
-                "Sign" => "MIICeAIBADANBgkqhkiG9w0BAQEFAASCAmIwggJeAgEAAoGBAN2lOq+RJdIifbPL", # TODO get it from global place 
+                "Sign" => "MIICdQIBADANBgkqhkiG9w0BAQEFAASCAl8wggJbAgEAAoGBAKqGjysoxJtCHFgU", # TODO get it from global place 
                 "signMethod" => "SimpleKey",
                 "format" => "json",
                 "version" => "1.0.0",
@@ -67,7 +68,8 @@ class Order extends Controller
                 ]
             ];
 
-        $response =  Http::post('https://openapi.52imile.cn/client/order/createB2cOrder', $body);
+        // $response =  Http::post('https://openapi.52imile.cn/client/order/createB2cOrder', $body); # dev
+        $response =  Http::post('https://openapi.imile.com/client/order/createB2cOrder', $body); #production
         if ($response->json()['code'] != "200") throw new \Exception($response->json()['message']);
 
         // update shipment with order
