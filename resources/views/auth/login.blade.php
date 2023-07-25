@@ -3,7 +3,7 @@
     <x-auth-session-status class="mb-2" :status="session('status')" />
 
     <div class="container-fluid d-flex justify-content-center flex-column align-items-center mt-5 rounded p-4 vh-100">
-        <img src="images/favicon.png" width=200 alt="Logo" class="mb-4">
+        <img src="images/logo.png" width=200 alt="Logo" class="mb-4">
         <form method="POST" action="{{ route('login') }}">
             @csrf
 
