@@ -17,8 +17,9 @@
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <!-- Scripts -->
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-    @yield('css')
+    <script src="{{ asset('js/app.js') }}" defer></script>
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+
 </head>
 
 <body class="font-sans antialiased">
@@ -41,7 +42,7 @@
     </div>
     @yield('js')
 </body>
-    <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
-    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ asset('js/bootstrap.min.js') }}"></script>
 
 </html>
