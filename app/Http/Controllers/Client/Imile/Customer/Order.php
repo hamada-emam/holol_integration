@@ -28,6 +28,7 @@ class Order extends Controller
                 // "customerId" => "C21018520", # TODO get it from global place 
                 "customerId" => "C2103720301", # TODO get it from global place 
                 "accessToken" => $token,
+                // "Sign" => "MIICeAIBADANBgkqhkiG9w0BAQEFAASCAmIwggJeAgEAAoGBAN2lOq+RJdIifbPL", # TODO get it from global place 
                 "Sign" => "MIICdQIBADANBgkqhkiG9w0BAQEFAASCAl8wggJbAgEAAoGBAKqGjysoxJtCHFgU", # TODO get it from global place 
                 "signMethod" => "SimpleKey",
                 "format" => "json",

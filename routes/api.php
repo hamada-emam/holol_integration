@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Client\Imile\Customer\Order;
+use App\Models\Shipment;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +17,6 @@ use Illuminate\Support\Facades\Route;
 
 $key = config('app.secre_key');
 Route::post("/webhook_callback/$key", [Order::class, 'callback']);
+Route::get('/read_synced', function () {
+    return Shipment::all();
+});
