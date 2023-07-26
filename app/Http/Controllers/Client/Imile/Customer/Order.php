@@ -181,13 +181,13 @@ class Order extends Controller
     {
         // add the logic to get the code of the area
         $subzone = Zone::where('zone_id', $subZoneId)->whereNotNull('parent_id')->first();
-        return $subzone->mapped_zone;
+        return $subzone->mapped_zone ?? ""; #puth default here
     }
 
     static function getCity($zoneId): string
     {
         $subzone = Zone::where('zone_id', $zoneId)->whereNull('parent_id')->first();
-        return $subzone->mapped_zone;
+        return $subzone->mapped_zone ?? ""; #put default here
     }
 
     static function getCountry(): string
