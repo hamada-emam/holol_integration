@@ -151,7 +151,7 @@ class Shipment extends Controller
 
         $existsIds = [];
         /** @var mixed */
-        $response = (new ServicesShipment)->listShipments(input: new ListShipmentFilter(statusCode: ShipmentStatusField::OTD), output: $output);
+        $response = (new ServicesShipment)->listShipments(input: new ListShipmentFilter(statusCode: ShipmentStatusField::OTD), output: $output, first: 100);
 
         $shipments = $response->original['data']['listShipments']['data'];
         foreach ($shipments as $shipment) {
