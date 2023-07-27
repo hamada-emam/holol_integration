@@ -2,6 +2,13 @@
 
 namespace App\Enums;
 
+/**
+ *
+ * const DELIVERED = '1200';   that means delivery is done ? DTR
+ * const CANCELED = '2403';   , that mean delivery is canceled ? RTS
+ * const RE_SCHEDULE = '302';  , that means that it will be back to redelivery?  HTR
+ * 
+ */
 enum  WebHookStatusCode
 {
     // Status Code	Description
@@ -13,7 +20,6 @@ enum  WebHookStatusCode
 
     const SCHEDULE = '301';                     #Schedule => The shipment has been scheduled for delivery.
 
-
     const BAG_ARRIVED = '800';                  #Bag Arrived => The shipment arrived delivery station or in transit station.
     const ASSIGN_DA = '400';                    #Assign DA => The shipment assigned to DA, waiting for delivery.
 
@@ -23,7 +29,6 @@ enum  WebHookStatusCode
 
     const RETURN_ARRIVE = '600';                #Return Arrive => Shipment returns to return center from delivery station.
     const RETURN_SHIPPING = '700';              #Return Shipping =>Shipment arrived return center. 
-
 
     const SUCCESSFULLY_RETURNED = '1300';       #Successfully Returned => Driver got the return shipment from customer.  
     const SUCCESSFULLY_REFUNDED = '1400';       #Successfully Refunded => Driver returns the COD to customer successfully.
@@ -38,7 +43,6 @@ enum  WebHookStatusCode
     const RETURN_TO_CLIENT = '2204';            #Return to Client => Failed order return to client completed.
     const FAIL_RETURN = '2800';                 #Fail return => Failed order return to client pending.
 
-
     const TEMPORARY_STORAGE = '2200';           #Temporary storage => Order in temporary storage.
     const  GOODS_LOST = '2401';                 #Abnormal End - Goods Lost => Package lost. 
     const MERCHANT_CANCELLATION = '2402';       #Abnormal End - Merchant Cancellation =>  Order cancelled by the merchant.
@@ -47,9 +51,3 @@ enum  WebHookStatusCode
     const CANCELED = '2403';       # **         #Canceled => Order cancelled.
     const RE_SCHEDULE = '302';     # **         #Re-Schedule => The shipment has been scheduled for delivery again.
 }
-
-/*
-const DELIVERED = '1200';   that means delivery is done ? DTR
-const CANCELED = '2403';   , that mean delivery is canceled ? RTS
-const RE_SCHEDULE = '302';  , that means that it will be back to redelivery?  HTR
- */

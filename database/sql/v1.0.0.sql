@@ -1,5 +1,4 @@
 -- settings
-
 INSERT INTO settings (url, token, type_code)
 VALUES (
 "http://accurate.accuratess.com:8000/graphql", 

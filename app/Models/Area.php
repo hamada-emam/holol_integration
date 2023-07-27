@@ -10,7 +10,6 @@ class Area extends Model
 
     function city()
     {
-        return $this->belongsTo(City::class, 'city_name','name');
+        return $this->belongsTo(City::class, 'city_name', 'name');
     }
-
 }

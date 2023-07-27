@@ -73,26 +73,10 @@ class Shipment extends Controller
             ShipmentField::SENDERADDRESS,
             ShipmentField::SENDERPOSTALCODE,
             ShipmentField::SIGNATURE,
-            ShipmentField::customer([
-                CustomerField::ID,
-                CustomerField::CODE,
-                CustomerField::NAME,
-            ]),
             ShipmentField::service([
                 ServiceField::ID,
                 ServiceField::CODE,
                 ServiceField::NAME,
-            ]),
-            ShipmentField::branch([
-                BranchField::ID,
-                BranchField::CODE,
-            ]),
-            ShipmentField::originBranch([
-                BranchField::ID,
-                BranchField::CODE,
-            ]),
-            ShipmentField::messages([
-                MessageField::ID,
             ]),
             ShipmentField::senderZone([
                 ZoneField::ID,
@@ -122,14 +106,6 @@ class Shipment extends Controller
                 SizeField::LENGTH,
                 SizeField::WIDTH,
                 SizeField::HEIGHT
-            ]),
-            ShipmentField::transactions([
-                DropDownField::ID,
-                DropDownField::CODE,
-            ]),
-            ShipmentField::transactions([
-                DropDownField::ID,
-                DropDownField::CODE,
             ]),
             ShipmentField::type([
                 DropDownField::ID,

@@ -10,14 +10,19 @@ class Auth extends Controller
     /**
      * return token 
      *
+     *  -- dev --
+     * "customerId" => "C21018520", # TODO get it from global place 
+     * "Sign" => "MIICeAIBADANBgkqhkiG9w0BAQEFAASCAmIwggJeAgEAAoGBAN2lOq+RJdIifbPL", # TODO get it from global place 
+     * $response = Http::post('https://openapi.52imile.cn/auth/accessToken/grant', $body); #dev
+     * 
      * @return string
      */
     static function auth(): string
     {
         $body = [
-            'customerId' => 'C2103720301',
-            'sign' => 'MIICdQIBADANBgkqhkiG9w0BAQEFAASCAl8wggJbAgEAAoGBAKqGjysoxJtCHFgU',
-            'signMethod' => 'SimpleKey',
+            "customerId" => "C2103720301",
+            "Sign" => "MIICdQIBADANBgkqhkiG9w0BAQEFAASCAl8wggJbAgEAAoGBAKqGjysoxJtCHFgU",
+            "signMethod" => "SimpleKey",
             'format' => 'json',
             'version' => '1.0.0',
             'timestamp' => '1647727143355',
@@ -27,8 +32,7 @@ class Auth extends Controller
             ],
         ];
 
-        $response = Http::post('https://openapi.imile.com/auth/accessToken/grant', $body); #production
-        // $response = Http::post('https://openapi.52imile.cn/auth/accessToken/grant', $body);#dev
+        $response = Http::post('https://openapi.imile.com/auth/accessToken/grant', $body);
 
         $responseBody = $response->json();
         return $responseBody['data']['accessToken'];

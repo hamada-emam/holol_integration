@@ -12,7 +12,8 @@ class SettingFactory extends Factory
 {
     /**
      * Define the model's default state.
-     *
+     * TODO that is the default auth credintials for Accurate
+     * 
      * @return array<string, mixed>
      */
     public function definition(): array

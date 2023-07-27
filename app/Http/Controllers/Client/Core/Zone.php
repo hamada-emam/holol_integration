@@ -13,6 +13,12 @@ use App\Models\City;
 
 class Zone extends Controller
 {
+    /**
+     * 
+     *
+     * @param [type] $id
+     * @return void
+     */
     function index($id = null)
     {
         /** @var mixed */
@@ -30,6 +36,12 @@ class Zone extends Controller
         return view('dashboard', compact(['zones', 'mappedZones', 'parentId']));
     }
 
+    /**
+     * 
+     *
+     * @param Request $request
+     * @return void
+     */
     function store(Request $request)
     {
         $data = $request->all();
@@ -41,6 +53,12 @@ class Zone extends Controller
         return redirect('zones');
     }
 
+    /**
+     * 
+     *
+     * @param [type] $data
+     * @return array
+     */
     function prepareData($data): array
     {
         unset($data['_token']);

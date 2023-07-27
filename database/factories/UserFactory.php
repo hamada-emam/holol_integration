@@ -21,7 +21,6 @@ class UserFactory extends Factory
             'name' => "Admin",
             'username' => "admin",
             'password' => '$2y$10$U2V4t3uZR6q80EcP9OpRwuv9fyROPm4O6GSJqxxkcrVfsCYbPxDsG', // password
-            // '111111' => '$2y$10$NztZPY1G6qfnY1W2.vQtq.pnaeGlfh1izukoenibw1/GD55wnkLWu', // password
             'remember_token' => Str::random(10),
         ];
     }

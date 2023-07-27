@@ -18,6 +18,14 @@ return [
 
     'name' => env('APP_NAME', 'Laravel'),
 
+    /*
+    |--------------------------------------------------------------------------
+    | Webhook Endpoint Secret Key
+    |--------------------------------------------------------------------------
+    | That the key for webhooking statuses into needed status updated
+    |
+    */
+
     'secre_key' => env('SECRET_KEY', 'MIICdQIBADANBgkqhkiG9w0BAQEFAASCAl8wggJbAgEAAoGBAKqGjysoxJtCHFgU'),
 
     /*
