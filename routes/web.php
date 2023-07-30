@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\LogInController;
 use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\Auth\ProfileController;
 use App\Http\Controllers\Auth\SettingController;
+use App\Http\Controllers\Client\Core\FailedJobsController;
 use App\Http\Controllers\Client\Core\Zone;
 use Illuminate\Support\Facades\Route;
 
@@ -35,13 +36,16 @@ Route::middleware('auth')->group(function () {
         return redirect('zones');
     })->name('dashboard');
 
-    Route::post('/logout', [LoginController::class, 'destroy'])->name('logout');
     Route::get('/zones/{id?}', [Zone::class, 'index'])->name('zones');
     Route::post('/zones', [Zone::class, 'store'])->name('submit');
+
+    Route::get('/failed', [FailedJobsController::class, 'index'])->name('failed');
+    Route::get('/retry/{id?}', [FailedJobsController::class, 'retry'])->name('failed.retry');
 
     Route::get('/setting', [SettingController::class, 'edit'])->name('setting.edit');
     Route::put('setting', [SettingController::class, 'update'])->name('setting.update');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::post('/logout', [LoginController::class, 'destroy'])->name('logout');
     Route::put('password', [PasswordController::class, 'update'])->name('password.update');
 });

@@ -2,11 +2,8 @@
 
 namespace App\Http\Controllers\Accurate\DeliveryAgent;
 
-use Accurate\Shipping\Enums\Fields\BranchField;
 use Accurate\Shipping\Enums\Fields\CancellationReasonField;
 use Accurate\Shipping\Enums\Fields\Core\DropDownField;
-use Accurate\Shipping\Enums\Fields\CustomerField;
-use Accurate\Shipping\Enums\Fields\MessageField;
 use Accurate\Shipping\Enums\Fields\ServiceField;
 use Accurate\Shipping\Enums\Fields\ShipmentField;
 use Accurate\Shipping\Enums\Fields\SizeField;
@@ -27,6 +24,34 @@ class Shipment extends Controller
      * @return void
      */
     static function syncShipments()
+    {
+        $response = self::listShipments();
+        $shipments = $response['data'];
+        $paginatorInfo = $response['paginatorInfo'];
+
+        if ($paginatorInfo['hasMorePages']) {
+            $response = self::listShipments(page: $paginatorInfo['currentPage'] + 1);
+            $shipments = array_merge($shipments, $response['data']);
+            $paginatorInfo = $response['paginatorInfo'];
+        }
+        $existsIds = [];
+        foreach ($shipments as $shipment) {
+            $existsIds[] = $shipment['id'];
+            /** @var ModelsShipment */
+            $syncedShipment = ModelsShipment::where('shipment_id', $shipment['id'])->first();
+            if (!$syncedShipment) {
+                $syncedShipment = new ModelsShipment();
+                $syncedShipment->forceFill([
+                    'shipment_id' => $shipment['id'],
+                    'shipment' => serialize($shipment),
+                ]);
+                $syncedShipment->save();
+                SyncShipment::dispatch($shipment);
+            }
+        }
+        DB::table('shipments')->whereNotIn('shipment_id', $existsIds)->delete();
+    }
+    private static function listShipments($first = 100, $page = 1)
     {
         $output = [
             ShipmentField::ID,
@@ -149,26 +174,8 @@ class Shipment extends Controller
             ]),
         ];
 
-        $existsIds = [];
         /** @var mixed */
-        $response = (new ServicesShipment)->listShipments(input: new ListShipmentFilter(statusCode: ShipmentStatusField::OTD), output: $output, first: 100);
-
-        $shipments = $response->original['data']['listShipments']['data'];
-        foreach ($shipments as $shipment) {
-            $existsIds[] = $shipment['id'];
-            /** @var ModelsShipment */
-            $syncedShipment = ModelsShipment::where('shipment_id', $shipment['id'])->first();
-            if (!$syncedShipment) {
-                $syncedShipment = new ModelsShipment();
-                $syncedShipment->forceFill([
-                    'shipment_id' => $shipment['id'],
-                    'shipment' => serialize($shipment),
-                ]);
-                $syncedShipment->save();
-                SyncShipment::dispatch($shipment);
-            }
-        }
-
-        DB::table('shipments')->whereNotIn('shipment_id', $existsIds)->delete();
+        $response = (new ServicesShipment)->listShipments(input: new ListShipmentFilter(statusCode: ShipmentStatusField::OTD), output: $output, first: $first, page: $page);
+        return $response->original['data']['listShipments'];
     }
 }

@@ -80,7 +80,6 @@ class Order extends Controller
         // update shipment with order
         $localShipment = Shipment::where('shipment_id', $shipment['id'])->first();
         $localShipment->updateWithOrders($shipment['code']);
-        // info(json_encode(Shipment::all()));
     }
 
     /**
@@ -125,8 +124,8 @@ class Order extends Controller
             ]),
         ];
 
+        $notes = "This is from action webhook callback.\n" + @$data['lastProblemStatus'] ?? "";
         $shipmentId = Shipment::where('order_code', $data['orderCode'])->first()?->shipment_id;
-
         if (!$shipmentId) return response('error', 500);
 
         try {
@@ -134,17 +133,17 @@ class Order extends Controller
             match ($data['orderStatus']) {
                 WebHookStatusCode::DELIVERED  => $input = new UpdateStatus(
                     id: $shipmentId,
-                    notes: "this is from webhook callback",
+                    notes: $notes,
                     deliveredField: new DeliveredField(deliveryType: new FullDeliveredType()),
                 ),
                 WebHookStatusCode::CANCELED => $input = new UpdateStatus(
                     id: $shipmentId,
-                    notes: "",
+                    notes: $notes,
                     returnField: new ReturnField(returnField: new FullyDueField()),
                 ),
                 WebHookStatusCode::RE_SCHEDULE  => $input = new UpdateStatus(
                     id: $shipmentId,
-                    notes: "",
+                    notes: $notes,
                     holdToRedeliver: new HoldedField(deliveryDate: null),
                 ),
             };

@@ -17,10 +17,9 @@
             <table class="table table-striped-columns">
                 <thead>
                     <tr>
-                        {{-- <th scope="col">#</th> --}}
                         <th scope="col">Code</th>
                         <th scope="col">Name</th>
-                        <th scope="col">Name</th>
+                        <th scope="col">Mapped Name</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -35,7 +34,6 @@
                                 <a href="{{ route('zones', [$item['id']]) }}" style="color: red">{{ $item['name'] }}</a>
                             </td>
                             <td>
-                                {{-- {{ die($item['mapped_zone']) }} --}}
                                 <input list="brow" class="mapped_zone-{{ $item['id'] }} listInput form-control"
                                     name="mapped_zone-{{ $item['id'] }}" value="{{ $item['mapped_zone'] }}">
                                 <datalist id="brow">
@@ -50,6 +48,7 @@
             </table>
         </form>
     </div>
+
     @section('js')
         <script></script>
     @endsection

@@ -19,7 +19,7 @@ class Kernel extends ConsoleKernel
                 info("\n The task succeeded");
             })
             ->onFailure(function () {
-                // TODO make a table that holds the try error into it 
+                // TODO make a table that holds the try error into it
                 info("\n  The task failed");
             });
     }
