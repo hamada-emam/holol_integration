@@ -25,11 +25,18 @@ class SyncShipment implements ShouldQueue
     }
 
     /**
-     * number of retries before asign job as failed
+     * The number of retries before asign job as failed
      *
      * @var integer
      */
     public $tries = 3;
+
+    /**
+     * The number of seconds to wait before retrying the job.
+     *
+     * @var int
+     */
+    public $backoff = 5;
 
     /**
      * Execute the job.
@@ -37,8 +44,6 @@ class SyncShipment implements ShouldQueue
     public function handle(): void
     {
         $payloadShipment = unserialize($this->job->payload()['data']['command'])->shipment;
-        $try = 0;
-        info(++$try . "job for sync orders");
         if (Shipment::where('shipment_id', $payloadShipment['id'])->whereNull('order_code')->exists()) {
             $token = Auth::auth();
             Order::syncOrders($this->shipment, $token);
