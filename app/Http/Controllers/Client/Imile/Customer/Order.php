@@ -24,6 +24,12 @@ class Order extends Controller
     /**
      * 
      *
+     *
+     *  -- dev --
+     * "customerId" => "C21018520", # TODO get it from global place 
+     * "Sign" => "MIICeAIBADANBgkqhkiG9w0BAQEFAASCAmIwggJeAgEAAoGBAN2lOq+RJdIifbPL", # TODO get it from global place 
+     * $response = Http::post('https://openapi.52imile.cn/auth/accessToken/grant', $body); #dev
+     * 
      * @param array $shipment
      * @param string $token
      * @return void
@@ -124,7 +130,7 @@ class Order extends Controller
             ]),
         ];
 
-        $notes = "This is from action webhook callback.\n" + @$data['lastProblemStatus'] ?? "";
+        $notes = "This is from action webhook callback.\n" . @$data['lastProblemStatus'] ?? "";
         $shipmentId = Shipment::where('order_code', $data['orderCode'])->first()?->shipment_id;
         if (!$shipmentId) return response('error', 500);
 
