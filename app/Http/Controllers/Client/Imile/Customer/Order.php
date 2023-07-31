@@ -152,11 +152,15 @@ class Order extends Controller
                     notes: $notes,
                     holdToRedeliver: new HoldedField(deliveryDate: null),
                 ),
+                default => function () use ($data) {
+                    throw new Exception("unhandeled orderStatus: {$data['orderStatus']}");
+                }
             };
 
             $result = (new ServicesShipment())->updateShipmentStatus($input, $output);
             return $result;
         } catch (\Exception $e) {
+            info($e->getMessage());
             return response('error', 500);
         }
     }
