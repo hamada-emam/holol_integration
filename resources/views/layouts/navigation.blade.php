@@ -11,19 +11,26 @@
                     </a>
                 </div>
 
-                <!-- Navigation Links -->
+                <!-- Clients  -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('zones')" :active="request()->routeIs('zones')">
-                        {{ __('Zones') }}
+                    <x-nav-link :href="route('client')" :active="request()->routeIs('client')">
+                        {{ __('Clients') }}
                     </x-nav-link>
                 </div>
 
-                <!--  -->
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                <!-- Failed Jobs -->
+                {{-- <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('failed')" :active="request()->routeIs('failed')">
                         {{ __('Failed Jobs') }}
                     </x-nav-link>
-                </div>
+                </div> --}}
+
+                <!-- Navigation Links -->
+                {{-- <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('zones')" :active="request()->routeIs('zones')">
+                        {{ __('Zones') }}
+                    </x-nav-link>
+                </div> --}}
 
             </div>
 
@@ -51,9 +58,9 @@
                             {{ __('Profile') }}
                         </x-dropdown-link>
 
-                        <x-dropdown-link :href="route('setting.edit')">
+                        {{-- <x-dropdown-link :href="route('setting.edit')">
                             {{ __('Setting') }}
-                        </x-dropdown-link>
+                        </x-dropdown-link> --}}
 
                         <!-- Authentication -->
                         <form method="POST" action="{{ route('logout') }}">
@@ -87,11 +94,19 @@
 
     <!-- Responsive Navigation Menu -->
     <div :class="{ 'block': open, 'hidden': !open }" class="hidden sm:hidden">
-        <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                {{ __('Dashboard') }}
+        <!-- Failed Jobs -->
+        {{-- <div class="">
+            <x-responsive-nav-link :href="route('failed')" :active="request()->routeIs('failed')">
+                {{ __('Failed Jobs') }}
             </x-responsive-nav-link>
-        </div>
+        </div> --}}
+
+        <!-- Navigation Links -->
+        {{-- <div class="">
+            <x-responsive-nav-link :href="route('zones')" :active="request()->routeIs('zones')">
+                {{ __('Zones') }}
+            </x-responsive-nav-link>
+        </div> --}}
 
         <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-200">
@@ -103,12 +118,11 @@
                 {{ __('Profile') }}
             </x-dropdown-link>
 
-            <x-dropdown-link :href="route('setting.edit')">
+            {{-- <x-dropdown-link :href="route('setting.edit')">
                 {{ __('Setting') }}
-            </x-dropdown-link>
+            </x-dropdown-link> --}}
 
             <div class="mt-3">
-
                 <!-- Authentication -->
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf

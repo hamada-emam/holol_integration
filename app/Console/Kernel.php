@@ -3,7 +3,6 @@
 namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
-use App\Http\Controllers\Accurate\DeliveryAgent\Shipment;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
 class Kernel extends ConsoleKernel
@@ -13,15 +12,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        $schedule->call([Shipment::class, 'syncShipments'])
-            ->everyMinute()
-            ->onSuccess(function () {
-                info("\n The task succeeded");
-            })
-            ->onFailure(function () {
-                // TODO make a table that holds the try error into it
-                info("\n  The task failed");
-            });
+
     }
 
     /**

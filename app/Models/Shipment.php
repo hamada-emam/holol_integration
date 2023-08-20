@@ -12,4 +12,8 @@ class Shipment extends Model
         $this->order_code = $orderCode;
         $this->save();
     }
+    function returnValue($value)
+    {
+        return $this->id = $value;
+    }
 }

@@ -10,16 +10,24 @@ use Illuminate\Http\Request;
 use App\Models\Zone as ModelsZone;
 use App\Models\Area;
 use App\Models\City;
+use App\Traits\InitAccurate;
 
 class Zone extends Controller
 {
+    use InitAccurate;
+
+    public function __construct()
+    {
+        $this->initClient();
+    }
+
     /**
      * 
      *
      * @param [type] $id
      * @return void
      */
-    function index($id = null)
+    function index($id = null, $client_id = null)
     {
         /** @var mixed */
         $response = (new ServicesZone())->listZones(input: new ListZonesFilter(

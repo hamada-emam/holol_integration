@@ -3,27 +3,35 @@
 use Accurate\Shipping\Enums\Fields\ZoneField;
 use Accurate\Shipping\Models\Filters\ListZonesFilter;
 use Accurate\Shipping\Services\Zone;
+use App\Http\Controllers\Accurate\DeliveryAgent\Shipment;
 use App\Http\Controllers\Client\Imile\Customer\Order;
-use App\Models\Shipment;
+use App\Models\Shipment as ShipmentModel;
 use App\Models\Zone as ModelsZone;
 use Illuminate\Support\Facades\Route;
 
 /*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "api" middleware group. Make something great!
-|
+  |--------------------------------------------------------------------------
+  | API Routes
+  |--------------------------------------------------------------------------
+  |
+  | Here is where you can register API routes for your application. These
+  | routes are loaded by the RouteServiceProvider and all of them will
+  | be assigned to the "api" middleware group. Make something great!
+  |
 */
 
-$key = config('app.secre_key');
-Route::post("/webhook_callback/$key", [Order::class, 'callback']);
+Route::post('/webhook_callback/{secret_key}', [Order::class, 'callback']);
+Route::post('/{company_code}/webhook_callback/{id}', [Shipment::class, 'callback']);
 
-Route::get('/read_synced', function () {
-    return Shipment::all();
+// Will be deleted in production
+
+Route::get('/read_synced_shipments', function () {
+    return ShipmentModel::all();
+});
+
+Route::get('/clear_null_shipments', function () {
+    ShipmentModel::whereNull('order_code')->delete();
+    return ShipmentModel::all();
 });
 
 Route::get('/sync_zones', function () {

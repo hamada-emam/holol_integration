@@ -26,7 +26,7 @@ return [
     |
     */
 
-    'secre_key' => env('SECRET_KEY', 'MIICdQIBADANBgkqhkiG9w0BAQEFAASCAl8wggJbAgEAAoGBAKqGjysoxJtCHFgU'),
+    'secret_key' => env('SECRET_KEY', 'MIICdQIBADANBgkqhkiG9w0BAQEFAASCAl8wggJbAgEAAoGBAKqGjysoxJtCHFgU'),
 
     /*
     |--------------------------------------------------------------------------

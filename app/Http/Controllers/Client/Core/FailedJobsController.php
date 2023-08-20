@@ -16,7 +16,7 @@ class FailedJobsController extends Controller
      * @param [type] $id
      * @return void
      */
-    function index()
+    function index($id = null)
     {
         $failedJobProvider = app(FailedJobProviderInterface::class);
         $failedJobs = $failedJobProvider->all();

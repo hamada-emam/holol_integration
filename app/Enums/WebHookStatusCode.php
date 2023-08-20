@@ -44,10 +44,10 @@ enum  WebHookStatusCode
     const FAIL_RETURN = '2800';                 #Fail return => Failed order return to client pending.
 
     const TEMPORARY_STORAGE = '2200';           #Temporary storage => Order in temporary storage.
-    const  GOODS_LOST = '2401';                 #Abnormal End - Goods Lost => Package lost. 
+    const GOODS_LOST = '2401';                 #Abnormal End - Goods Lost => Package lost. 
     const MERCHANT_CANCELLATION = '2402';       #Abnormal End - Merchant Cancellation =>  Order cancelled by the merchant.
 
     const DELIVERED = '1200';      # **         #Delivered => Shipment delivered to customer.
     const CANCELED = '2403';       # **         #Canceled => Order cancelled.
-    const RE_SCHEDULE = '302';     # **         #Re-Schedule => The shipment has been scheduled for delivery again.
+    const RE_SCHEDULE = '302';     # **         #Re-Schedule => The shipment has been scheduled for delivery againt.
 }

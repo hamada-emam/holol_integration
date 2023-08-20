@@ -21,6 +21,7 @@
                 @foreach ($data as $key => $job)
                     <tr>
                         <td>{{ ++$key }}</td>
+                        {{-- TODO: it will be a link to the shipment in accurate system --}}
                         <td><span class="badge bg-success" style="width: 100px">{{ $job['shipmentCode'] }}</span>
                         </td>
                         <td>{{ $job['failedAt'] }}</td>

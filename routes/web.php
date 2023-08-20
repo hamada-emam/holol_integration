@@ -2,10 +2,11 @@
 
 use App\Http\Controllers\Auth\LogInController;
 use App\Http\Controllers\Auth\PasswordController;
-use App\Http\Controllers\Auth\ProfileController;
-use App\Http\Controllers\Auth\SettingController;
+use App\Http\Controllers\Core\ProfileController;
+use App\Http\Controllers\Core\SettingController;
 use App\Http\Controllers\Client\Core\FailedJobsController;
 use App\Http\Controllers\Client\Core\Zone;
+use App\Http\Controllers\Core\ClientController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,22 +29,29 @@ Route::middleware('guest')->group(function () {
 
 Route::middleware('auth')->group(function () {
     Route::get('/', function () {
-        return redirect('zones');
+        return redirect('client');
     });
 
     // todo it wll open a real dashboard 
     Route::get('/dashboard', function () {
-        return redirect('zones');
+        return redirect('client');
     })->name('dashboard');
 
     Route::get('/zones/{id?}', [Zone::class, 'index'])->name('zones');
     Route::post('/zones', [Zone::class, 'store'])->name('submit');
 
-    Route::get('/failed', [FailedJobsController::class, 'index'])->name('failed');
+    Route::get('/failed/{id?}', [FailedJobsController::class, 'index'])->name('failed');
     Route::get('/retry/{id?}', [FailedJobsController::class, 'retry'])->name('failed.retry');
 
     Route::get('/setting', [SettingController::class, 'edit'])->name('setting.edit');
     Route::put('setting', [SettingController::class, 'update'])->name('setting.update');
+
+    Route::get('/client', [ClientController::class, 'list'])->name('client');
+    Route::get('/client/create', [ClientController::class, 'create'])->name('client.create');
+    Route::post('/client/store', [ClientController::class, 'store'])->name('client.store');
+    Route::get('/client/edit/{id}', [ClientController::class, 'edit'])->name('client.edit');
+    Route::post('/client/update', [ClientController::class, 'update'])->name('client.update');
+    Route::post('/client/delete/{id}',   [ClientController::class, 'delete'])->name('client.delete');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::post('/logout', [LoginController::class, 'destroy'])->name('logout');
