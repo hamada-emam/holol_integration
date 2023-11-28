@@ -33,7 +33,7 @@ class Zone extends Controller
         }
         $mappedZones = $id ? Area::whereHas('city', fn ($q) => $q->whereHas('zones'))->get() : City::all();
         $parentId = $id;
-        return view('dashboard', compact(['zones', 'mappedZones', 'parentId']));
+        return view('zones', compact(['zones', 'mappedZones', 'parentId']));
     }
 
     /**

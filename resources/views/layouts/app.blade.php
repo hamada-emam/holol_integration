@@ -34,6 +34,19 @@
             </header>
         @endif
 
+        @if (\Illuminate\Support\Facades\Session::has('success'))
+            <div class="alert alert-success" x-data="{ show: true }" x-show="show" x-transition
+                x-init="setTimeout(() => show = false, 3000)">
+                {{ \Illuminate\Support\Facades\Session::get('success') }}
+            </div>
+        @endif
+
+        @if (\Illuminate\Support\Facades\Session::has('failed'))
+            <div class="alert alert-failed" x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 3000)">
+                {{ \Illuminate\Support\Facades\Session::get('failed') }}
+            </div>
+        @endif
+
         <!-- Page Content -->
         <main>
             {{ $slot }}
@@ -41,7 +54,7 @@
     </div>
     @yield('js')
 </body>
-    <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
-    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ asset('js/bootstrap.min.js') }}"></script>
 
 </html>

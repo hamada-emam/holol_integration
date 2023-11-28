@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Enums\UserTypeCode;
+use App\Enums\ProviderTypeCode;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -19,9 +19,11 @@ class SettingFactory extends Factory
     public function definition(): array
     {
         return [
-            'token' => 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vYWNjdXJhdGUuYWNjdXJhdGVzcy5jb206ODAwMC9ncmFwaHFsIiwiaWF0IjoxNjg5ODAyMjQ4LCJleHAiOjE2OTg0NDIyNDgsIm5iZiI6MTY4OTgwMjI0OCwianRpIjoiUXVxcmVwSng4SkFIcjVYbSIsInN1YiI6IjI5IiwicHJ2IjoiY2NjOTNjYmJjZTdlMTE1MjZlNzZmNjJhMWRhODE1MTExNjMxNjUyZiIsImxvZ2luX2lkIjo4NTF9.0koRQFilZqzUzLJD30U7woEeVPCHSubPaSaSCjq687w', // password
-            'url' => 'http://accurate.accuratess.com:8000/graphql',
-            'type_code' => (UserTypeCode::DELIVERY_AGENT)->value,
+            'token' => 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2FjY3VyYXRlLmFjY3VyYXRlc3MuY29tOjgwMDEvZ3JhcGhxbCIsImlhdCI6MTcwMDk4NjcwMSwiZXhwIjoxNzA5NjI2NzAxLCJuYmYiOjE3MDA5ODY3MDEsImp0aSI6ImJIbmFZOTkzRjh5Yk41S1ciLCJzdWIiOiIyOSIsInBydiI6ImNjYzkzY2JiY2U3ZTExNTI2ZTc2ZjYyYTFkYTgxNTExMTYzMTY1MmYiLCJsb2dpbl9pZCI6NjMwfQ.TLMlE5WDS1LfVjdJkEAVGOu5_WzFUGQPaNMk8FrFfBQ', // password
+            'url' => 'http://192.168.1.31:8001/graphql',
+            // 'token' => 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2FjY3VyYXRlLmFjY3VyYXRlc3MuY29tOjgwMDEvZ3JhcGhxbCIsImlhdCI6MTcwMDk4NjcwMSwiZXhwIjoxNzA5NjI2NzAxLCJuYmYiOjE3MDA5ODY3MDEsImp0aSI6ImJIbmFZOTkzRjh5Yk41S1ciLCJzdWIiOiIyOSIsInBydiI6ImNjYzkzY2JiY2U3ZTExNTI2ZTc2ZjYyYTFkYTgxNTExMTYzMTY1MmYiLCJsb2dpbl9pZCI6NjMwfQ.TLMlE5WDS1LfVjdJkEAVGOu5_WzFUGQPaNMk8FrFfBQ', // password
+            // 'url' => 'http://accurate.accuratess.com:8001/graphql',
+            'type_code' => (ProviderTypeCode::DELIVERY_AGENT)->value,
         ];
     }
 }

@@ -1,11 +1,12 @@
 <?php
 
-use App\Http\Controllers\Auth\LogInController;
-use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\Auth\ProfileController;
 use App\Http\Controllers\Auth\SettingController;
 use App\Http\Controllers\Client\Core\FailedJobsController;
 use App\Http\Controllers\Client\Core\Zone;
+use App\Http\Controllers\Core\IntegrationController;
+use App\Http\Controllers\Core\ProviderController;
+use App\Http\Controllers\Core\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,33 +20,52 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('guest')->group(function () {
-    Route::get('login', [LogInController::class, 'create'])
-        ->name('login');
-
-    Route::post('login', [LogInController::class, 'store']);
-});
-
 Route::middleware('auth')->group(function () {
     Route::get('/', function () {
-        return redirect('zones');
-    });
-
-    // todo it wll open a real dashboard 
-    Route::get('/dashboard', function () {
-        return redirect('zones');
+        $isAdmin = auth()->user()->isAdmin;
+        return view('dashboard', compact(['isAdmin']));
     })->name('dashboard');
+
+    // profile
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    // users
+    // Route::get('/users', [UserController::class, 'index'])->name('users.list');
+    // Route::post('/users', [UserController::class, 'store'])->name('users.store');
+    // Route::put('/users', [UserController::class, 'update'])->name('users.update');
+    // Route::delete('/users', [UserController::class, 'delete'])->name('users.delete');
+
+    Route::resource('users', UserController::class)->names([
+        'index' => 'users.list',
+        'store' => 'users.store',
+        'update' => 'users.update',
+        'destroy' => 'users.delete',
+    ])->except([
+        'create', 'show', 'create', 'edit',
+    ]);
+
+    // Route::resource('users', UserController::class)->names([
+    //     'index' => 'users.list',
+    //     'store' => 'users.store',
+    //     'update' => 'users.update',
+    //     'destroy' => 'users.delete',
+    // ])->except([
+    //     'create', 'show', 'create', 'edit',
+    // ])=;
 
     Route::get('/zones/{id?}', [Zone::class, 'index'])->name('zones');
     Route::post('/zones', [Zone::class, 'store'])->name('submit');
 
+    Route::post('/integrations', [IntegrationController::class, 'index'])->name('integrations');
+    Route::post('/providers', [ProviderController::class, 'index'])->name('providers');
+
     Route::get('/failed', [FailedJobsController::class, 'index'])->name('failed');
     Route::get('/retry/{id?}', [FailedJobsController::class, 'retry'])->name('failed.retry');
 
+    Route::get('/integrations', [IntegrationController::class, 'edit'])->name('setting.edit');
     Route::get('/setting', [SettingController::class, 'edit'])->name('setting.edit');
     Route::put('setting', [SettingController::class, 'update'])->name('setting.update');
-
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::post('/logout', [LoginController::class, 'destroy'])->name('logout');
-    Route::put('password', [PasswordController::class, 'update'])->name('password.update');
 });
+
+require __DIR__ . '/auth.php';

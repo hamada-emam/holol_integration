@@ -11,14 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('settings', function (Blueprint $table) {
+        Schema::create('shipments', function (Blueprint $table) {
             $table->id();
-            $table->string('token');
-            $table->string('url');
-            // $table->string('sign_key');
-            // $table->string('customer_id');
-            // $table->string('url');
-            $table->string('type_code');
+            $table->longText('shipment');
+            $table->integer('shipment_id');
+            $table->string('order_code')->nullable();
+            $table->timestamps();
         });
     }
 
@@ -27,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('settings');
+        Schema::dropIfExists('shipment');
     }
 };

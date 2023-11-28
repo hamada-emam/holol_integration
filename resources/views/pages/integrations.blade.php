@@ -10,13 +10,7 @@
     @endsection
     <div class="container">
 
-        @if (auth()->user()->isAdmin)
-            <h1>Admin</h1>
-        @else
-            <h1>Client</h1>
-        @endif
-
-        {{-- <form method="post" action="{{ route('submit') }}">
+        <form method="post" action="{{ route('submit') }}">
             @csrf
             <div class="my-2 d-flex justify-content-end"><button class="btn btn-success btn-outline-success" type="submit"
                     style="width: 80px">save</button></div>
@@ -52,7 +46,7 @@
                     @endforeach
                 </tbody>
             </table>
-        </form> --}}
+        </form>
     </div>
 
     @section('js')

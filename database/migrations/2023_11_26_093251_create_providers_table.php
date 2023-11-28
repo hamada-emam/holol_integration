@@ -1,6 +1,6 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
+use ILLUMINATE\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
@@ -11,11 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('shipments', function (Blueprint $table) {
+        Schema::create('providers', function (Blueprint $table) {
             $table->id();
-            $table->longText('shipment');
-            $table->integer('shipment_id');
-            $table->integer('order_code')->nullable();
+            $table->string('code');
+            $table->string('name');
+            $table->string('api_url')->nullable();
+            $table->boolean('active')->default(true);
             $table->timestamps();
         });
     }
@@ -25,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('shipment');
+        Schema::dropIfExists('providers');
     }
 };

@@ -12,18 +12,49 @@
                 </div>
 
                 <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('zones')" :active="request()->routeIs('zones')">
-                        {{ __('Zones') }}
-                    </x-nav-link>
-                </div>
+                @if (auth()->user()->isAdmin)
+                    <!-- users -->
+                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                        <x-nav-link :href="route('users.list')" :active="request()->routeIs('users')">
+                            {{ __('Users') }}
+                        </x-nav-link>
+                    </div>
 
-                <!--  -->
+                    <!-- providers -->
+                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                        <x-nav-link :href="route('providers')" :active="request()->routeIs('providers')">
+                            {{ __('Providers') }}
+                        </x-nav-link>
+                    </div>
+
+                    <!-- integrations -->
+                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                        <x-nav-link :href="route('integrations')" :active="request()->routeIs('integrations')">
+                            {{ __('Integrations') }}
+                        </x-nav-link>
+                    </div>
+
+                    {{-- <!-- integrations -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('failed')" :active="request()->routeIs('failed')">
-                        {{ __('Failed Jobs') }}
+                    <x-nav-link :href="route('integrations')" :active="request()->routeIs('integrations')">
+                        {{ __('Integrations') }}
                     </x-nav-link>
-                </div>
+                </div> --}}
+                @endif
+                @if (!auth()->user()->isAdmin)
+                    <!-- zones -->
+                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                        <x-nav-link :href="route('zones')" :active="request()->routeIs('zones')">
+                            {{ __('Zones') }}
+                        </x-nav-link>
+                    </div>
+                    <!-- Failed Jobs -->
+                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                        <x-nav-link :href="route('failed')" :active="request()->routeIs('failed')">
+                            {{ __('Failed Jobs') }}
+                        </x-nav-link>
+                    </div>
+                @endif
 
             </div>
 
