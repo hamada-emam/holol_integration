@@ -1,16 +1,17 @@
 <?php
 
-namespace App\Http\Requests\Provider;
+namespace App\Http\Requests\Integration;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ProviderDeleteRequest extends FormRequest
+class IntegrationDeleteRequest extends FormRequest
 {
     public function authorize()
     {
+        // TODO throw validation error in ui 
         return true;
     }
-    // TODO throw validation error in ui 
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -19,7 +20,7 @@ class ProviderDeleteRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'id' => 'required|numeric|exists:providers,id',
+            'id' => 'required|numeric|exists:integrations,id',
         ];
     }
 }

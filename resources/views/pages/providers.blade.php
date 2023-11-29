@@ -49,7 +49,8 @@
                                         data-toggle="modal">{{ __('Edit') }}</x-edit-button>
                                 </div>
                                 <div class="col-auto">
-                                    <x-danger-button type="button" data-target="#deleteProviderModal" id="editProvider"
+                                    <x-danger-button type="button"
+                                        data-target="#deleteProviderModal_{{ $provider->id }}" id="editProvider"
                                         data-toggle="modal" data-toggle="modal">{{ __('Delete') }}</x-edit-button>
                                 </div>
                             </div>
@@ -57,7 +58,7 @@
                     </tr>
 
                     <!-- Modal for delete provider -->
-                    <div class="modal fade" id="deleteProviderModal" tabindex="-1" role="dialog"
+                    <div class="modal fade" id="deleteProviderModal_{{ $provider->id }}" tabindex="-1" role="dialog"
                         aria-labelledby="deleteProviderModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
@@ -237,9 +238,7 @@
                 $('#closeForm').on('click', function() {
                     $('#addProviderModal').modal('hide');
                 });
-                $('#closeDeleteForm').on('click', function() {
-                    $('#deleteProviderModal').modal('hide');
-                });
+
                 $('[data-toggle="modal"]').click(function() {
                     var targetModal = $(this).data('target');
                     $(targetModal).modal('show');

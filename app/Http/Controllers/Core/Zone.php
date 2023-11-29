@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Client\Core;
+namespace App\Http\Controllers\Core;
 
 use Accurate\Shipping\Enums\Fields\ZoneField;
 use Accurate\Shipping\Models\Filters\ListZonesFilter;

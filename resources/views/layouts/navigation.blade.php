@@ -29,19 +29,13 @@
 
                     <!-- integrations -->
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                        <x-nav-link :href="route('integrations')" :active="request()->routeIs('integrations')">
+                        <x-nav-link :href="route('integrations.list')" :active="request()->routeIs('integrations')">
                             {{ __('Integrations') }}
                         </x-nav-link>
                     </div>
 
-                    {{-- <!-- integrations -->
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('integrations')" :active="request()->routeIs('integrations')">
-                        {{ __('Integrations') }}
-                    </x-nav-link>
-                </div> --}}
                 @endif
-                @if (!auth()->user()->isAdmin)
+                {{-- @if (!auth()->user()->isAdmin) --}}
                     <!-- zones -->
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                         <x-nav-link :href="route('zones')" :active="request()->routeIs('zones')">
@@ -54,7 +48,7 @@
                             {{ __('Failed Jobs') }}
                         </x-nav-link>
                     </div>
-                @endif
+                {{-- @endif --}}
 
             </div>
 

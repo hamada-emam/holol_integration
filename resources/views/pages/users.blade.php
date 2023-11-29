@@ -43,13 +43,14 @@
                                         data-toggle="modal">{{ __('Edit') }}</x-edit-button>
                                 </div>
                                 <div class="col-auto">
-                                    <x-danger-button type="button" data-target="#deleteUserModal" id="editUser"
-                                        data-toggle="modal" data-toggle="modal">{{ __('Delete') }}</x-edit-button>
+                                    <x-danger-button type="button" data-target="#deleteUserModal_{{ $user->id }}"
+                                        id="editUser" data-toggle="modal"
+                                        data-toggle="modal">{{ __('Delete') }}</x-edit-button>
                                 </div>
                         </td>
                     </tr>
                     <!-- Modal for delete user -->
-                    <div class="modal fade" id="deleteUserModal" tabindex="-1" role="dialog"
+                    <div class="modal fade" id="deleteUserModal_{{ $user->id }}" tabindex="-1" role="dialog"
                         aria-labelledby="deleteUserModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
@@ -208,9 +209,7 @@
                 $('#closeForm').on('click', function() {
                     $('#addUserModal').modal('hide');
                 });
-                $('#closeDeleteForm').on('click', function() {
-                    $('#deleteUserModal').modal('hide');
-                });
+
                 $('[data-toggle="modal"]').click(function() {
                     var targetModal = $(this).data('target');
                     $(targetModal).modal('show');

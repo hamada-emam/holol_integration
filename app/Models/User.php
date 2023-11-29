@@ -8,6 +8,10 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
+/**
+ * @property bool $isAdmin
+ * @method static Builder isAdmin() @param bool $isAdmin = true
+ */
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
