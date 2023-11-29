@@ -2,17 +2,15 @@
 
 namespace App\Http\Controllers\Core;
 
-use App\Enums\ProviderTypeCode;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Provider\ProviderDeleteRequest;
+use App\Http\Requests\Provider\ProviderStoreRequest;
+use App\Http\Requests\Provider\ProviderUpdateRequest;
 use App\Models\Provider;
-use App\Models\Setting;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\View\View;
+use Illuminate\Support\Facades\Session;
 
 class ProviderController extends Controller
 {
-
     /**
      * 
      *
@@ -22,43 +20,58 @@ class ProviderController extends Controller
     function index()
     {
         $providers = Provider::all();
-        return view('providers', compact(['providers']));
+        return view('pages.providers', compact(['providers']));
     }
 
-    // /**
-    //  * 
-    //  *
-    //  * @param Request $request
-    //  * @return void
-    //  */
-    // function store(Request $request)
-    // {
-    //     // $data = $request->all();
-    //     // foreach ($this->prepareData($data) as $key => $zone) {
-    //     //     $newZone = ModelsZone::where('zone_id', $zone['zone_id'])->where('parent_id', $zone['parent_id'])->first() ?? new ModelsZone();
-    //     //     $newZone->forceFill($zone);
-    //     //     $newZone->save();
-    //     // }
-    //     return redirect('zones');
-    // }
+    /**
+     * 
+     *
+     * @param ProviderStoreRequest $request
+     * @return void
+     */
+    function store(ProviderStoreRequest $request)
+    {
+        $validatedData = $request->validated();
 
-    // /**
-    //  * 
-    //  *
-    //  * @param [type] $data
-    //  * @return array
-    //  */
-    // function prepareData($data): array
-    // {
-    //     unset($data['_token']);
-    //     $elements = collect($data)->chunk(3)->map(function ($chunk) {
-    //         $groupedData = [];
-    //         foreach ($chunk as $key => $value) {
-    //             $groupedData[explode('-', $key)[0]] = $value;
-    //         }
-    //         return $groupedData;
-    //     })->toArray();
+        if ((new Provider())->forceFill($validatedData)->save())
+            Session::flash('success', 'Provider stored successfully!');
+        else
+            Session::flash('failed', 'Failed to store Provider!');
 
-    //     return $elements;
-    // }
+        return redirect('providers');
+    }
+
+    /**
+     * 
+     *
+     * @param ProviderUpdateRequest $request
+     * @return void
+     */
+    function update(ProviderUpdateRequest $request)
+    {
+        $validatedData = $request->validated();
+
+        if (Provider::find($request->id)->forceFill($validatedData)->save())
+            Session::flash('success', 'Provider Updated successfully!');
+        else
+            Session::flash('failed', 'Failed to Update provider!');
+
+        return redirect('providers');
+    }
+
+    /**
+     * 
+     *
+     * @param ProviderDeleteRequest $request
+     * @return void
+     */
+    function destroy(ProviderDeleteRequest $request)
+    {
+        if (Provider::find($request->id)->delete())
+            Session::flash('success', 'Provider deleted successfully!');
+        else
+            Session::flash('failed', 'Failed to Delete provider!');
+
+        return redirect('providers');
+    }
 }

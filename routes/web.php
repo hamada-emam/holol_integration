@@ -30,40 +30,40 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    // users
-    // Route::get('/users', [UserController::class, 'index'])->name('users.list');
-    // Route::post('/users', [UserController::class, 'store'])->name('users.store');
-    // Route::put('/users', [UserController::class, 'update'])->name('users.update');
-    // Route::delete('/users', [UserController::class, 'delete'])->name('users.delete');
-
+    // user
     Route::resource('users', UserController::class)->names([
-        'index' => 'users.list',
-        'store' => 'users.store',
-        'update' => 'users.update',
-        'destroy' => 'users.delete',
+        'index'     => 'users.list',
+        'store'     => 'users.store',
+        'update'    => 'users.update',
+        'destroy'   => 'users.delete',
     ])->except([
         'create', 'show', 'create', 'edit',
     ]);
-
-    // Route::resource('users', UserController::class)->names([
-    //     'index' => 'users.list',
-    //     'store' => 'users.store',
-    //     'update' => 'users.update',
-    //     'destroy' => 'users.delete',
-    // ])->except([
-    //     'create', 'show', 'create', 'edit',
-    // ])=;
-
+    // provider
+    Route::resource('providers', ProviderController::class)->names([
+        'index'     => 'providers.list',
+        'store'     => 'providers.store',
+        'update'    => 'providers.update',
+        'destroy'   => 'providers.delete',
+    ])->except([
+        'create', 'show', 'create', 'edit',
+    ]);
+    // integration
+    Route::resource('integrations', IntegrationController::class)->names([
+        'index'     => 'integrations.list',
+        'store'     => 'integrations.store',
+        'update'    => 'integrations.update',
+        'destroy'   => 'integrations.delete',
+    ])->except([
+        'create', 'show', 'create', 'edit',
+    ]);
+    // zone
     Route::get('/zones/{id?}', [Zone::class, 'index'])->name('zones');
     Route::post('/zones', [Zone::class, 'store'])->name('submit');
-
-    Route::post('/integrations', [IntegrationController::class, 'index'])->name('integrations');
-    Route::post('/providers', [ProviderController::class, 'index'])->name('providers');
 
     Route::get('/failed', [FailedJobsController::class, 'index'])->name('failed');
     Route::get('/retry/{id?}', [FailedJobsController::class, 'retry'])->name('failed.retry');
 
-    Route::get('/integrations', [IntegrationController::class, 'edit'])->name('setting.edit');
     Route::get('/setting', [SettingController::class, 'edit'])->name('setting.edit');
     Route::put('setting', [SettingController::class, 'update'])->name('setting.update');
 });

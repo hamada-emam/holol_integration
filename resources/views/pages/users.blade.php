@@ -50,7 +50,7 @@
                     </tr>
                     <!-- Modal for delete user -->
                     <div class="modal fade" id="deleteUserModal" tabindex="-1" role="dialog"
-                        aria-labelledby="editUserModalLabel" aria-hidden="true">
+                        aria-labelledby="deleteUserModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
