@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Core;
 
+use Accurate\Shipping\Client\Client;
 use Accurate\Shipping\Enums\Fields\ZoneField;
 use Accurate\Shipping\Models\Filters\ListZonesFilter;
 use Accurate\Shipping\Services\Zone as ServicesZone;
@@ -10,30 +11,34 @@ use Illuminate\Http\Request;
 use App\Models\Zone as ModelsZone;
 use App\Models\Area;
 use App\Models\City;
+use App\Models\Integration;
+use App\Models\User;
 
-class Zone extends Controller
+class ZoneController extends Controller
 {
+    //  TODO: if the provider ia accurate solution no mapping will be appear
     /**
-     * 
      *
      * @param [type] $id
      * @return void
      */
-    function index($id = null)
+    function index($integrationId, $parentId = null)
     {
+        $integration = Integration::find($integrationId);
+        Client::init(User::find($integration->user_id)->backend_url, ['Authorization' => "Bearer $integration->user_token"]);
         /** @var mixed */
         $response = (new ServicesZone())->listZones(input: new ListZonesFilter(
-            parentId: $id,
+            parentId: $parentId,
         ), output: [ZoneField::ID, ZoneField::CODE, ZoneField::NAME]);
 
         $zones = $response->original['data']['listZonesDropdown'];
 
         foreach ($zones as &$zone) {
-            $zone['mapped_zone'] =  ModelsZone::where('parent_id', $id)->where('zone_id', $zone['id'])->first()?->mapped_zone;
+            $zone['mapped_zone'] =  ModelsZone::where('parent_id', $parentId)->where('zone_id', $zone['id'])->first()?->mapped_zone;
         }
-        $mappedZones = $id ? Area::whereHas('city', fn ($q) => $q->whereHas('zones'))->get() : City::all();
-        $parentId = $id;
-        return view('zones', compact(['zones', 'mappedZones', 'parentId']));
+        $mappedZones = $parentId ? Area::whereHas('city', fn ($q) => $q->whereHas('zones'))->get() : City::all();
+        $parentId = $parentId;
+        return view('pages.zones', compact(['zones', 'mappedZones', 'parentId', 'integration']));
     }
 
     /**
@@ -50,7 +55,7 @@ class Zone extends Controller
             $newZone->forceFill($zone);
             $newZone->save();
         }
-        return redirect('zones');
+        return back()->with('success', 'Zone mapped successfuly.');
     }
 
     /**

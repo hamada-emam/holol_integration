@@ -19,8 +19,9 @@ return new class extends Migration
             // will allow this user for sign into the system and handle it's owen integrations
             $table->foreignIdFor(User::class);
             $table->foreignIdFor(Provider::class);
-            $table->string('api_url');
-            $table->string('api_token');
+            $table->string('provider_url', 255);
+            $table->json('provider_secret');
+            $table->string('user_token', 1000);
             $table->boolean('active')->default(false);
             $table->timestamps();
         });

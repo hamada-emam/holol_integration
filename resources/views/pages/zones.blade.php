@@ -8,12 +8,24 @@
             }
         </style>
     @endsection
-    <div class="container">
 
+    <div class="mx-1 mx-md-2 mx-lg-3  mt-4">
         <form method="post" action="{{ route('submit') }}">
             @csrf
-            <div class="my-2 d-flex justify-content-end"><button class="btn btn-success btn-outline-success" type="submit"
-                    style="width: 80px">save</button></div>
+            <div class="row">
+                <div class="col">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/">Home</a></li>
+                        <li class="breadcrumb-item"><a href="/providers">Providers</a></li>
+                    </ol>
+                </div>
+                <div class="col d-flex justify-content-end">
+                    <div class="text-right">
+                        <!-- Add New Integration Provider -->
+                        <x-primary-button type="submit">{{ __('Save') }}</x-primary-button>
+                    </div>
+                </div>
+            </div>
             <table class="table table-striped-columns">
                 <thead>
                     <tr>
@@ -31,7 +43,8 @@
                                 value="{{ $item['id'] }}">
                             <td>{{ $item['id'] }}</td>
                             <td>
-                                <a href="{{ route('zones', [$item['id']]) }}" style="color: red">{{ $item['name'] }}</a>
+                                <a href="{{ route('zones', ['integrationId' => $integration['id'], 'parentId' => $item['id']]) }}"
+                                    style="color: red">{{ $item['name'] }}</a>
                             </td>
                             <td>
                                 <input list="brow" class="mapped_zone-{{ $item['id'] }} listInput form-control"

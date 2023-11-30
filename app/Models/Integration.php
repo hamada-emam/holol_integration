@@ -13,6 +13,11 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
  */
 class Integration extends Model
 {
+    function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
     /**
      * Interact with the user's first name.
      */

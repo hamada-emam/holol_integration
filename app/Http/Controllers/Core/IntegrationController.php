@@ -20,7 +20,7 @@ class IntegrationController extends Controller
      */
     public function index(Request $request): View
     {
-        $integrations = Integration::all();
+        $integrations = Integration::with('user')->get();
         $providers = Provider::active()->get();
         $users = User::isAdmin(false)->get();
         $isAdmin = auth()->user()->isAdmin;;

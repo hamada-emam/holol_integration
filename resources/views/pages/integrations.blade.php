@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div class="container">
+    <div class="mx-1 mx-md-2 mx-lg-3 mt-4">
         <div class="row">
             <div class="col">
                 <ol class="breadcrumb">
@@ -23,8 +23,10 @@
                         <th scope="col">User</th>
                     @endif
                     <th scope="col">Provider</th>
-                    <th scope="col">Api Url</th>
-                    <th scope="col">Api Token</th>
+                    <th scope="col">Provider Url</th>
+                    <th scope="col">Provider Token</th>
+                    <th scope="col">User Url</th>
+                    <th scope="col">User Token</th>
                     <th scope="col">Active</th>
                     <th scope="col">Created At</th>
                     <th scope="col">Action</th>
@@ -35,11 +37,14 @@
                     <tr>
                         <td>{{ $integration['id'] }}</td>
                         @if ($isAdmin)
-                            <td>{{ \App\Models\User::find($integration['user_id'])->name }}</td>
+                            <td>{{ $integration->user->name }}</td>
                         @endif
                         <td>{{ \App\Models\provider::find($integration['provider_id'])->name }}</td>
+                        {{-- TODO: make them in the database to be used  --}}
                         <td>{{ $integration['api_url'] }}</td>
-                        <td>{{ $integration['api_token'] }}</td>
+                        <td>{{ substr($integration['user_token'], 0, 30) . '...' }}</td>
+                        <td>{{ $integration->user->backend_url }}</td>
+                        <td>{{ substr($integration['user_token'], 0, 30) . '...' }}</td>
                         <td>
                             @if ($integration['active'])
                                 <span class="bg-success p-1 rounded-2 text-white">active</span>
@@ -50,6 +55,11 @@
                         <td>{{ date('d-m-Y', strtotime($integration['created_at'])) }}</td>
                         <td>
                             <div class="row">
+                                <div class="col-auto">
+                                    <a href="{{ route('zones', ['integrationId' => $integration['id']]) }}"
+                                        class="btn btn-warning text" tabindex="-1" role="button"
+                                        aria-disabled="true">Mapp Zones</a>
+                                </div>
                                 <div class="col-auto">
                                     <x-edit-button type="button"
                                         data-target="#editIntegrationModal_{{ $integration->id }}" id="editIntegration"
@@ -106,7 +116,6 @@
                                     <h5 class="modal-title" id="editIntegrationModalLabel">Edit Integration<h5>
                                 </div>
                                 <div class="modal-body">
-                                    {{ $errors->updateIntegrations . '----' . $integration->id }}
                                     <!-- Your form for edit a integrations -->
                                     <form method="post"
                                         action="{{ route('integrations.update', ['integration' => $integration->id]) }}"
@@ -157,11 +166,11 @@
                                         </div>
 
                                         <div>
-                                            <x-input-label for="api_token" :value="__('Api Token')" />
-                                            <x-text-input id="api_token{{ $integration->id }}" name="api_token"
-                                                type="text" value="{{ $integration['api_token'] }}"
-                                                class="mt-1 block w-full" autocomplete="new-api_token" />
-                                            <x-input-error :messages="$errors->updateIntegrations->get('api_token')" class="mt-2" />
+                                            <x-input-label for="user_token" :value="__('User Token')" />
+                                            <x-text-input id="user_token{{ $integration->id }}" name="user_token"
+                                                type="text" value="{{ $integration['user_token'] }}"
+                                                class="mt-1 block w-full" autocomplete="new-user_token" />
+                                            <x-input-error :messages="$errors->updateIntegrations->get('user_token')" class="mt-2" />
                                         </div>
 
                                         <div>
@@ -253,10 +262,10 @@
                         </div>
 
                         <div>
-                            <x-input-label for="api_token" :value="__('Api Token')" />
-                            <x-text-input id="api_token" name="api_token" type="text" class="mt-1 block w-full"
-                                value="{{ old('api_token') }}" autocomplete="new-api_token" />
-                            <x-input-error :messages="$errors->integrationStoreBag->get('api_token')" class="mt-2" />
+                            <x-input-label for="user_token" :value="__('Api Token')" />
+                            <x-text-input id="user_token" name="user_token" type="text" class="mt-1 block w-full"
+                                value="{{ old('user_token') }}" autocomplete="new-user_token" />
+                            <x-input-error :messages="$errors->integrationStoreBag->get('user_token')" class="mt-2" />
                         </div>
 
                         <div>
