@@ -20,8 +20,12 @@ return new class extends Migration
             $table->foreignIdFor(User::class);
             $table->foreignIdFor(Provider::class);
             $table->string('provider_url', 255);
-            $table->json('provider_secret');
-            $table->string('user_token', 1000);
+            $table->string('user_username');
+            $table->string('provider_username');
+            $table->string('user_password');
+            $table->string('provider_password');
+            $table->string('user_token', 1000)->nullable();
+            $table->string('provider_token', 1000)->nullable();
             $table->boolean('active')->default(false);
             $table->timestamps();
         });

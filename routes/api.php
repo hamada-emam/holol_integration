@@ -3,7 +3,7 @@
 use Accurate\Shipping\Enums\Fields\ZoneField;
 use Accurate\Shipping\Models\Filters\ListZonesFilter;
 use Accurate\Shipping\Services\Zone;
-use App\Http\Controllers\Client\Imile\Customer\Order;
+use App\Http\Controllers\Core\WebhookController;
 use App\Models\Shipment;
 use App\Models\Zone as ModelsZone;
 use Illuminate\Support\Facades\Route;
@@ -19,8 +19,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-$key = config('app.secre_key');
-Route::post("/webhook_callback/$key", [Order::class, 'callback']);
+// /key for the client, /id for integration
+
+Route::get("/webhook_callback/{integrationCode?}/{code?}", [WebhookController::class, 'processRequest']);
 
 Route::get('/read_synced', function () {
     return Shipment::all();

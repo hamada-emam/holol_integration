@@ -20,7 +20,6 @@ class ProviderStoreRequest extends FormRequest
         return [
             'code'          => ['nullable', 'max:255', Rule::unique(Provider::class)],
             'name'          => ['required', 'string', 'max:255'],
-            'api_url'       => ['required', 'string', 'url', Rule::unique(Provider::class)],
             'active'        => ['required', 'bool'],
         ];
     }

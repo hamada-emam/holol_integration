@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Client\Core;
+namespace App\Http\Controllers\Core;
 
 use Illuminate\Queue\Failed\FailedJobProviderInterface;
 use App\Http\Controllers\Controller;
@@ -32,6 +32,7 @@ class FailedJobsController extends Controller
             $failedData['failedJobID'] = $job->id;
             $data[] = $failedData;
         }
+
         return view('failed-jobs', compact(['data']));
     }
 

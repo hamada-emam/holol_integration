@@ -51,6 +51,7 @@ class Shipment extends Controller
         }
         DB::table('shipments')->whereNotIn('shipment_id', $existsIds)->delete();
     }
+
     private static function listShipments($first = 100, $page = 1)
     {
         $output = [

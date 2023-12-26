@@ -23,11 +23,25 @@ class ProviderUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'id'            => ['required', 'numeric', 'exists:providers,id'],
-            'code'          => ['required', 'max:255', Rule::unique(Provider::class)->ignore($this->id)],
-            'name'          => ['required', 'string', 'max:255'],
-            'api_url'       => ['required', 'string', 'url', Rule::unique(Provider::class)->ignore($this->id)],
-            'active'        => ['required', 'bool'],
+            'id' => [
+                'required',
+                'numeric',
+                'exists:providers,id',
+            ],
+            'code' => [
+                'required',
+                'max:255',
+                Rule::unique(Provider::class)->ignore($this->id),
+            ],
+            'name' => [
+                'required',
+                'string',
+                'max:255',
+            ],
+            'active' => [
+                'required',
+                'bool',
+            ],
         ];
     }
 }

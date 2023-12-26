@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div class="container">
+    <div class="mx-1 mx-md-2 mx-lg-3 mt-4">
         <div class="row">
             <div class="col">
                 <ol class="breadcrumb">
@@ -21,7 +21,6 @@
                 <tr>
                     <th scope="col">code</th>
                     <th scope="col">Name</th>
-                    <th scope="col">Api Url</th>
                     <th scope="col">Status</th>
                     <th scope="col">Created At</th>
                     <th scope="col">Actions</th>
@@ -32,7 +31,6 @@
                     <tr>
                         <td>{{ $provider['code'] }}</td>
                         <td>{{ $provider['name'] }}</td>
-                        <td>{{ $provider['api_url'] }}</td>
                         <td>
                             @if ($provider['active'])
                                 <span class="bg-success p-1 rounded-2 text-white">active</span>
@@ -121,13 +119,6 @@
                                             <x-input-error :messages="$errors->updateProviders->get('name')" class="mt-2" />
                                         </div>
                                         <div>
-                                            <x-input-label for="api_url" :value="__('Api Url')" />
-                                            <x-text-input id="api_url{{ $provider->id }}" name="api_url"
-                                                type="text" value="{{ $provider['api_url'] }}"
-                                                class="mt-1 block w-full" autocomplete="new-api_url" />
-                                            <x-input-error :messages="$errors->updateProviders->get('api_url')" class="mt-2" />
-                                        </div>
-                                        <div>
                                             <x-input-label for="active" :value="__('Active')" />
                                             <x-form-dropdown id="active" name="active">
                                                 <x-slot name="options">
@@ -187,12 +178,6 @@
                             <x-text-input id="name" name="name" type="text" class="mt-1 block w-full"
                                 value="{{ old('name') }}" autocomplete="new-name" />
                             <x-input-error :messages="$errors->providerStoreBag->get('name')" class="mt-2" />
-                        </div>
-                        <div>
-                            <x-input-label for="api_url" :value="__('Api Url')" />
-                            <x-text-input id="api_url" name="api_url" type="text" class="mt-1 block w-full"
-                                value="{{ old('api_url') }}" autocomplete="new-api_url" />
-                            <x-input-error :messages="$errors->providerStoreBag->get('api_url')" class="mt-2" />
                         </div>
                         <div>
                             <x-input-label for="active" :value="__('Active')" />

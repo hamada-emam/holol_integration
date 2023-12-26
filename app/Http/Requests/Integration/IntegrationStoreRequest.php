@@ -33,12 +33,21 @@ class IntegrationStoreRequest extends FormRequest
                 new Active(Provider::class),
                 Rule::exists(Provider::class, 'id'),
             ],
-            'api_url' => [
+            'provider_url' => [
                 'required',
                 'string',
                 'url',
             ],
-            'api_token' => [
+            'provider_username' => [
+                'required',
+            ],
+            'user_username' => [
+                'required',
+            ],
+            'provider_password' => [
+                'required',
+            ],
+            'user_password' => [
                 'required',
             ],
             'active' => [

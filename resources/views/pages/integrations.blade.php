@@ -7,26 +7,26 @@
                     <li class="breadcrumb-item"><a href="/integrations">Integrations</a></li>
                 </ol>
             </div>
-            <div class="col d-flex justify-content-end">
-                <div class="text-right">
-                    <!-- Add New Integration Integration -->
-                    <x-primary-button type="button" data-target="#addIntegrationModal" id="addNew"
-                        data-toggle="modal" data-toggle="modal">{{ __('Add New') }}</x-primary-button>
+            @if ($isAdmin)
+                <div class="col d-flex justify-content-end">
+                    <div class="text-right">
+                        <!-- Add New Integration Integration -->
+                        <x-primary-button type="button" data-target="#addIntegrationModal" id="addNew"
+                            data-toggle="modal" data-toggle="modal">{{ __('Add New') }}</x-primary-button>
+                    </div>
                 </div>
-            </div>
+            @endif
         </div>
         <table class="table table-striped-columns">
             <thead>
                 <tr>
                     <th scope="col">#</th>
-                    @if ($isAdmin)
-                        <th scope="col">User</th>
-                    @endif
+                    <th scope="col">Client</th>
+                    <th scope="col">Client Url</th>
+                    <th scope="col">Client Username </th>
                     <th scope="col">Provider</th>
                     <th scope="col">Provider Url</th>
-                    <th scope="col">Provider Token</th>
-                    <th scope="col">User Url</th>
-                    <th scope="col">User Token</th>
+                    <th scope="col">Provider Username</th>
                     <th scope="col">Active</th>
                     <th scope="col">Created At</th>
                     <th scope="col">Action</th>
@@ -36,15 +36,12 @@
                 @foreach ($integrations as $integration)
                     <tr>
                         <td>{{ $integration['id'] }}</td>
-                        @if ($isAdmin)
-                            <td>{{ $integration->user->name }}</td>
-                        @endif
-                        <td>{{ \App\Models\provider::find($integration['provider_id'])->name }}</td>
-                        {{-- TODO: make them in the database to be used  --}}
-                        <td>{{ $integration['api_url'] }}</td>
-                        <td>{{ substr($integration['user_token'], 0, 30) . '...' }}</td>
+                        <td>{{ $integration->user->name }}</td>
                         <td>{{ $integration->user->backend_url }}</td>
-                        <td>{{ substr($integration['user_token'], 0, 30) . '...' }}</td>
+                        <td>{{ $integration->user_username }}</td>
+                        <td>{{ \App\Models\provider::find($integration['provider_id'])->name }}</td>
+                        <td>{{ $integration['provider_url'] }}</td>
+                        <td>{{ $integration['provider_username'] }}</td>
                         <td>
                             @if ($integration['active'])
                                 <span class="bg-success p-1 rounded-2 text-white">active</span>
@@ -60,17 +57,20 @@
                                         class="btn btn-warning text" tabindex="-1" role="button"
                                         aria-disabled="true">Mapp Zones</a>
                                 </div>
-                                <div class="col-auto">
-                                    <x-edit-button type="button"
-                                        data-target="#editIntegrationModal_{{ $integration->id }}" id="editIntegration"
-                                        data-toggle="modal" data-toggle="modal">{{ __('Edit') }}</x-edit-button>
-                                </div>
-                                <div class="col-auto">
-                                    <x-danger-button type="button"
-                                        data-target="#deleteIntegrationModal_{{ $integration->id }}"
-                                        id="deleteIntegration_{{ $integration->id }}" data-toggle="modal"
-                                        data-toggle="modal">{{ __('Delete') }}</x-edit-button>
-                                </div>
+                                @if ($isAdmin)
+                                    <div class="col-auto">
+                                        <x-edit-button type="button"
+                                            data-target="#editIntegrationModal_{{ $integration->id }}"
+                                            id="editIntegration" data-toggle="modal"
+                                            data-toggle="modal">{{ __('Edit') }}</x-edit-button>
+                                    </div>
+                                    <div class="col-auto">
+                                        <x-danger-button type="button"
+                                            data-target="#deleteIntegrationModal_{{ $integration->id }}"
+                                            id="deleteIntegration_{{ $integration->id }}" data-toggle="modal"
+                                            data-toggle="modal">{{ __('Delete') }}</x-edit-button>
+                                    </div>
+                                @endif
                             </div>
                         </td>
                     </tr>
@@ -116,6 +116,7 @@
                                     <h5 class="modal-title" id="editIntegrationModalLabel">Edit Integration<h5>
                                 </div>
                                 <div class="modal-body">
+                                    {{ $errors->updateIntegrations }}
                                     <!-- Your form for edit a integrations -->
                                     <form method="post"
                                         action="{{ route('integrations.update', ['integration' => $integration->id]) }}"
@@ -220,23 +221,21 @@
                         class="mt-6 space-y-6">
                         @csrf
                         @method('post')
-                        @if ($isAdmin)
-                            <div>
-                                <x-input-label for="user_id" :value="__('User')" />
-                                <x-form-dropdown id="user_id" name="user_id">
-                                    <x-slot name="options">
-                                        @foreach ($users as $key => $user)
-                                            <option value={{ $user->id }}
-                                                {{ old('user_id') == $user->id ? 'selected' : '' }}>
-                                                {{ $user->name }}
-                                            </option>
-                                        @endforeach
+                        <div>
+                            <x-input-label for="user_id" :value="__('User')" />
+                            <x-form-dropdown id="user_id" name="user_id">
+                                <x-slot name="options">
+                                    @foreach ($users as $key => $user)
+                                        <option value={{ $user->id }}
+                                            {{ old('user_id') == $user->id ? 'selected' : '' }}>
+                                            {{ $user->name }}
+                                        </option>
+                                    @endforeach
 
-                                    </x-slot>
-                                </x-form-dropdown>
-                                <x-input-error :messages="$errors->integrationStoreBag->get('user_id')" class="mt-2" />
-                            </div>
-                        @endif
+                                </x-slot>
+                            </x-form-dropdown>
+                            <x-input-error :messages="$errors->integrationStoreBag->get('user_id')" class="mt-2" />
+                        </div>
 
                         <div>
                             <x-input-label for="provider_id" :value="__('Provider')" />
@@ -255,17 +254,43 @@
                         </div>
 
                         <div>
-                            <x-input-label for="api_url" :value="__('Api Url')" />
-                            <x-text-input id="api_url" name="api_url" type="text" class="mt-1 block w-full"
-                                value="{{ old('api_url') }}" autocomplete="new-api_url" />
-                            <x-input-error :messages="$errors->integrationStoreBag->get('api_url')" class="mt-2" />
+                            <x-input-label for="provider_url" :value="__('Provider Url')" />
+                            <x-text-input id="provider_url" name="provider_url" type="text"
+                                class="mt-1 block w-full" value="{{ old('provider_url') }}"
+                                autocomplete="new-provider_url" />
+                            <x-input-error :messages="$errors->integrationStoreBag->get('provider_url')" class="mt-2" />
                         </div>
 
                         <div>
-                            <x-input-label for="user_token" :value="__('Api Token')" />
-                            <x-text-input id="user_token" name="user_token" type="text" class="mt-1 block w-full"
-                                value="{{ old('user_token') }}" autocomplete="new-user_token" />
-                            <x-input-error :messages="$errors->integrationStoreBag->get('user_token')" class="mt-2" />
+                            <x-input-label for="provider_username" :value="__('Provider Username')" />
+                            <x-text-input id="provider_username" name="provider_username" type="text"
+                                class="mt-1 block w-full" value="{{ old('provider_username') }}"
+                                autocomplete="new-provider_username" />
+                            <x-input-error :messages="$errors->integrationStoreBag->get('provider_username')" class="mt-2" />
+                        </div>
+
+                        <div>
+                            <x-input-label for="provider_password" :value="__('Provider Password')" />
+                            <x-text-input id="provider_password" name="provider_password" type="text"
+                                class="mt-1 block w-full" value="{{ old('provider_password') }}"
+                                autocomplete="new-provider_password" />
+                            <x-input-error :messages="$errors->integrationStoreBag->get('provider_password')" class="mt-2" />
+                        </div>
+
+                        <div>
+                            <x-input-label for="user_username" :value="__('Client Username')" />
+                            <x-text-input id="user_username" name="user_username" type="text"
+                                class="mt-1 block w-full" value="{{ old('user_username') }}"
+                                autocomplete="new-user_username" />
+                            <x-input-error :messages="$errors->integrationStoreBag->get('user_username')" class="mt-2" />
+                        </div>
+
+                        <div>
+                            <x-input-label for="user_password" :value="__('Client Password')" />
+                            <x-text-input id="user_password" name="user_password" type="text"
+                                class="mt-1 block w-full" value="{{ old('user_password') }}"
+                                autocomplete="new-user_password" />
+                            <x-input-error :messages="$errors->integrationStoreBag->get('user_password')" class="mt-2" />
                         </div>
 
                         <div>

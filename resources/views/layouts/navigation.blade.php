@@ -16,7 +16,7 @@
                     <!-- users -->
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                         <x-nav-link :href="route('users.list')" :active="request()->routeIs('users')">
-                            {{ __('Users') }}
+                            {{ __('Clients') }}
                         </x-nav-link>
                     </div>
 
@@ -26,14 +26,13 @@
                             {{ __('Providers') }}
                         </x-nav-link>
                     </div>
-
-                    <!-- integrations -->
-                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                        <x-nav-link :href="route('integrations.list')" :active="request()->routeIs('integrations')">
-                            {{ __('Integrations') }}
-                        </x-nav-link>
-                    </div>
                 @endif
+                <!-- integrations -->
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('integrations.list')" :active="request()->routeIs('integrations')">
+                        {{ __('Integrations') }}
+                    </x-nav-link>
+                </div>
                 {{-- @if (!auth()->user()->isAdmin) --}}
                 <!-- zones -->
                 {{-- <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
@@ -42,11 +41,11 @@
                         </x-nav-link>
                     </div> --}}
                 <!-- Failed Jobs -->
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                {{-- <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('failed')" :active="request()->routeIs('failed')">
                         {{ __('Failed Jobs') }}
                     </x-nav-link>
-                </div>
+                </div> --}}
                 {{-- @endif --}}
 
             </div>
@@ -74,10 +73,10 @@
                         <x-dropdown-link :href="route('profile.edit')">
                             {{ __('Profile') }}
                         </x-dropdown-link>
-
+                        {{-- 
                         <x-dropdown-link :href="route('setting.edit')">
                             {{ __('Setting') }}
-                        </x-dropdown-link>
+                        </x-dropdown-link> --}}
 
                         <!-- Authentication -->
                         <form method="POST" action="{{ route('logout') }}">
@@ -126,10 +125,10 @@
             <x-dropdown-link :href="route('profile.edit')">
                 {{ __('Profile') }}
             </x-dropdown-link>
-
+            {{-- 
             <x-dropdown-link :href="route('setting.edit')">
                 {{ __('Setting') }}
-            </x-dropdown-link>
+            </x-dropdown-link> --}}
 
             <div class="mt-3">
 

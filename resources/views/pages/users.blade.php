@@ -1,10 +1,10 @@
 <x-app-layout>
-    <div class="container">
+    <div class="mx-1 mx-md-2 mx-lg-3 mt-4">
         <div class="row">
             <div class="col">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="/">Home</a></li>
-                    <li class="breadcrumb-item"><a href="/users">Users</a></li>
+                    <li class="breadcrumb-item"><a href="/users">Clients</a></li>
                 </ol>
             </div>
             <div class="col d-flex justify-content-end">

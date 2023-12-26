@@ -2,11 +2,14 @@
     "name": "laravel/laravel",
     "type": "project",
     "description": "The skeleton application for the Laravel framework.",
-    "keywords": ["laravel", "framework"],
+    "keywords": [
+        "laravel",
+        "framework"
+    ],
     "license": "MIT",
     "require": {
-        "php": "^8.1",
-        "accurate/logistics-php": "dev-master",
+        "php": "^8.2",
+        "accurate/logistics-php-test": "dev-master",
         "guzzlehttp/guzzle": "^7.2",
         "laravel/breeze": "^1.21",
         "laravel/framework": "^10.10",
@@ -63,6 +66,12 @@
             "php-http/discovery": true
         }
     },
+    "repositories": [
+        {
+            "type": "path",
+            "url": "/home/hamada/7AMADA/software/Projects/Active/Work/Accurate/shipping-php"
+        }
+    ],
     "minimum-stability": "stable",
     "prefer-stable": true
 }

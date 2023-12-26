@@ -9,13 +9,17 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
  * @property Barcode $barcode
  * @method static Builder ordered()
  * @property int $pendingCollectionAmount
-
  */
 class Integration extends Model
 {
     function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    function provider()
+    {
+        return $this->belongsTo(Provider::class);
     }
 
     /**

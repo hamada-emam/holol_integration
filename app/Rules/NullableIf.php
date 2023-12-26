@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Rules\Core;
+namespace App\Rules;
 
 use InvalidArgumentException;
 

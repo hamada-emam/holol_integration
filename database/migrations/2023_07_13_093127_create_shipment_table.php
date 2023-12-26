@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->longText('shipment');
             $table->integer('shipment_id');
-            $table->string('order_code')->nullable();
+            $table->string('order_id')->nullable();
             $table->timestamps();
         });
     }

@@ -1,13 +1,11 @@
 <?php
 
 use App\Http\Controllers\Auth\ProfileController;
-use App\Http\Controllers\Auth\SettingController;
 use App\Http\Controllers\Client\Core\FailedJobsController;
 use App\Http\Controllers\Core\ZoneController;
 use App\Http\Controllers\Core\IntegrationController;
 use App\Http\Controllers\Core\ProviderController;
 use App\Http\Controllers\Core\UserController;
-use App\Models\Area;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,8 +21,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth')->group(function () {
     Route::get('/', function () {
-        die(Area::whereHas('city', fn ($q) => $q->whereHas('zones'))->get());
-
         $isAdmin = auth()->user()->isAdmin;
         return view('dashboard', compact(['isAdmin']));
     })->name('dashboard');
@@ -63,12 +59,9 @@ Route::middleware('auth')->group(function () {
     // zone
     Route::get('/zones/{integrationId}/{parentId?}', [ZoneController::class, 'index'])->name('zones');
     Route::post('/zones', [ZoneController::class, 'store'])->name('submit');
-
+    // jobs
     Route::get('/failed', [FailedJobsController::class, 'index'])->name('failed');
     Route::get('/retry/{id?}', [FailedJobsController::class, 'retry'])->name('failed.retry');
-
-    Route::get('/setting', [SettingController::class, 'edit'])->name('setting.edit');
-    Route::put('setting', [SettingController::class, 'update'])->name('setting.update');
 });
 
 require __DIR__ . '/auth.php';

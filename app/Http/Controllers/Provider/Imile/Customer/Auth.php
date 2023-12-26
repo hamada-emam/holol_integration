@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Client\Imile\Customer;
+namespace App\Http\Controllers\Provider\Imile\Customer;
 
 use App\Http\Controllers\Controller;
 use Exception;
